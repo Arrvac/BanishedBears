@@ -17,7 +17,7 @@ export const Footer = () => {
               height: "25px",
               width: "25px",
               cursor: "pointer",
-              marginRight: "15px",
+              marginRight: "20px",
             }}
           />
           <TwitterIcon
@@ -46,6 +46,8 @@ const Background = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  margin-top: -25vh;
+  z-index: -1;
 `;
 
 const Container = styled.div`
@@ -84,7 +86,7 @@ const SmallTitle = styled.p`
 const Row = styled.div`
   display: flex;
   padding-top: 10vh;
-  padding-bottom: 10vh;
+  padding-bottom: 5vh;
   & > *:hover {
     transition: transform 100ms linear;
     transform: scale(1.15);
