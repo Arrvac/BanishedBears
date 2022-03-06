@@ -28,7 +28,7 @@ export const Navbar = ({
 
   return (
     <>
-      {ethereum && !accountAddress ? (
+      {!ethereum || !accountAddress ? (
         <Error>
           <ErrorText>{errorMessage}</ErrorText>
         </Error>
