@@ -38,6 +38,9 @@ export const Navbar = ({
         <Title>BANISHED BEARS</Title>
         <Right>
           <DiscordIcon
+            onClick={() =>
+              window.open("https://discord.gg/KggfPnp5Wu", "_blank")
+            }
             style={{
               color: colors.main.black,
               height: "25px",
@@ -46,6 +49,9 @@ export const Navbar = ({
             }}
           />
           <TwitterIcon
+            onClick={() =>
+              window.open("https://twitter.com/BanishedBears", "_blank")
+            }
             style={{
               color: colors.main.black,
               height: "25px",
