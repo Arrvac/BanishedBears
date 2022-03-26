@@ -11,6 +11,17 @@ import BanishBearsAbi from "../assets/abi/banishBears.json";
 
 declare var window: any;
 
+type Bear = {
+  name: string;
+  attributes: {
+    trait_type: string;
+    value: string;
+    points: number;
+  }[];
+  image: string;
+  id: number;
+};
+
 export const Home = () => {
   const ethereum = window.ethereum;
   const [accountAddress, setAccountAddress] = useState<string | null>(null);
@@ -25,6 +36,9 @@ export const Home = () => {
   );
   const [oldContract, setOldContract] = useState<ethers.Contract | null>(null);
   const [newContract, setNewContract] = useState<ethers.Contract | null>(null);
+
+  const [bearsUnWrap, setBearsUnWrap] = useState<Bear[]>([]);
+  const [bearsWrap, setBearsWrap] = useState<Bear[]>([]);
 
   const setupMetamask = async () => {
     if (ethereum) {
@@ -62,6 +76,37 @@ export const Home = () => {
     setOldContract(tempOldContract);
   };
 
+  useEffect(() => {
+    if (oldContract) {
+      fetchAllBears(oldContract, setBearsUnWrap);
+    }
+  }, [oldContract]);
+
+  useEffect(() => {
+    if (newContract) {
+      fetchAllBears(newContract, setBearsWrap);
+    }
+  }, [newContract]);
+
+  const fetchAllBears = async (
+    contract: ethers.Contract,
+    setBears: (bear: Bear[]) => void,
+  ) => {
+    const numberOfBears = Number(await contract.balanceOf(accountAddress));
+    const localBears: Bear[] = [];
+
+    for (let i = 0; i < numberOfBears; i++) {
+      const numberOfBear = await contract.tokenOfOwnerByIndex(
+        accountAddress,
+        i,
+      );
+      const json = await contract.tokenURI(Number(numberOfBear));
+      const bear = await (await fetch(String(json))).json();
+      localBears.push(bear);
+    }
+    setBears(localBears);
+  };
+
   return (
     <>
       <Navbar
@@ -72,7 +117,14 @@ export const Home = () => {
       <Header />
       <Lore />
       <Carousel />
-      <Store setupMetamask={setupMetamask} accountAddress={accountAddress} />
+      <Store
+        setupMetamask={setupMetamask}
+        accountAddress={accountAddress}
+        bearsUnWrap={bearsUnWrap}
+        bearsWrap={bearsWrap}
+        newContract={newContract}
+        oldContract={oldContract}
+      />
       <FAQ />
       <Footer />
     </>
