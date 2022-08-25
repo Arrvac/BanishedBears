@@ -8,6 +8,7 @@ import { Lore } from "../components/Lore";
 import { Store } from "../components/Store";
 import { ethers } from "ethers";
 import BanishBearsAbi from "../assets/abi/banishBears.json";
+import WrapperAbi from "../assets/abi/wrapper.json";
 
 declare var window: any;
 
@@ -28,6 +29,7 @@ export const Home = () => {
 
   const newContractAddress = "0x8922a8a67787DBE73C1290AD8950993a430638c5";
   const oldContractAddress = "0x69617e5c47335049e806425883347b4797E7911b";
+  const wrapperContractAddress = "0x8ce76CDa1658a7dd8019FA5EffbaBe77E22CF2F9";
 
   const [provider, setProvider] =
     useState<ethers.providers.Web3Provider | null>(null);
@@ -35,6 +37,8 @@ export const Home = () => {
     null,
   );
   const [oldContract, setOldContract] = useState<ethers.Contract | null>(null);
+  const [wrapperContract, setWrapperContract] =
+    useState<ethers.Contract | null>(null);
   const [newContract, setNewContract] = useState<ethers.Contract | null>(null);
 
   const [bearsUnWrap, setBearsUnWrap] = useState<Bear[]>([]);
@@ -61,19 +65,17 @@ export const Home = () => {
     const tempSigner = tempProvider.getSigner();
     setSigner(tempSigner);
 
-    const tempNewContract = new ethers.Contract(
-      newContractAddress,
-      BanishBearsAbi,
-      tempSigner,
+    setNewContract(
+      new ethers.Contract(newContractAddress, BanishBearsAbi, tempSigner),
     );
-    setNewContract(tempNewContract);
 
-    const tempOldContract = new ethers.Contract(
-      oldContractAddress,
-      BanishBearsAbi,
-      tempSigner,
+    setOldContract(
+      new ethers.Contract(oldContractAddress, BanishBearsAbi, tempSigner),
     );
-    setOldContract(tempOldContract);
+
+    setWrapperContract(
+      new ethers.Contract(wrapperContractAddress, WrapperAbi, tempSigner),
+    );
   };
 
   useEffect(() => {
@@ -124,6 +126,7 @@ export const Home = () => {
         bearsWrap={bearsWrap}
         newContract={newContract}
         oldContract={oldContract}
+        wrapperContract={wrapperContract}
       />
       <FAQ />
       <Footer />

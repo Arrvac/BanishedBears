@@ -23,6 +23,7 @@ type StoreProps = {
   bearsUnWrap: Bear[];
   newContract: ethers.Contract | null;
   oldContract: ethers.Contract | null;
+  wrapperContract: ethers.Contract | null;
 };
 
 export const Store = ({
@@ -32,17 +33,40 @@ export const Store = ({
   bearsWrap,
   oldContract,
   newContract,
+  wrapperContract,
 }: StoreProps) => {
   const [type, setType] = useState<"wrap" | "unwrap">("unwrap");
   const bears = type === "wrap" ? bearsWrap : bearsUnWrap;
 
-  const wrapBear = async (id: number) => {
-    if (oldContract) {
-      const res = oldContract["safeTransferFrom(address,address,uint256)"](
-        accountAddress,
-        "0x2e10d805885d38d59651BF5ea1E27C34CA5E410D",
-        id,
-      );
+  const wrapBear = async (id?: number) => {
+    try {
+      if (oldContract && wrapperContract) {
+        await oldContract["setApprovalForAll(address,bool)"](
+          "0x8ce76CDa1658a7dd8019FA5EffbaBe77E22CF2F9",
+          true,
+        );
+        const bearsToWrap = id ? [id] : bearsUnWrap.map(bear => bear.id);
+
+        const perChunk = 20; // items per chunk
+        const result = bearsToWrap.reduce((resultArray, item, index) => {
+          const chunkIndex = Math.floor(index / perChunk);
+          if (!resultArray[chunkIndex]) {
+            //@ts-ignore
+            resultArray[chunkIndex] = [] as any;
+          }
+          //@ts-ignore
+          resultArray[chunkIndex].push(item);
+          return resultArray;
+        }, []);
+
+        await Promise.all(
+          result.map(async res => {
+            await wrapperContract["wrapBears(uint256[])"](res);
+          }),
+        );
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -104,6 +128,21 @@ export const Store = ({
             >
               Unwrap Bears ({bearsUnWrap.length})
             </MuiButton>
+            {bearsUnWrap.length > 0 ? (
+              <MuiButton
+                style={{
+                  backgroundColor: "white",
+                  color: "grey",
+                  borderRadius: 5,
+                  borderColor: "grey",
+                }}
+                onClick={() => {
+                  wrapBear();
+                }}
+              >
+                WRAP BEARS
+              </MuiButton>
+            ) : null}
           </ButtonGroup>
           <Grid container spacing={5}>
             {bears.map((bear: Bear) => {
@@ -118,6 +157,7 @@ export const Store = ({
                         borderRadius: "15px",
                         marginBottom: "30px",
                       }}
+                      alt={"bear"}
                     />
                     <BeatAttribute>
                       <BeatAttributeTitle>ID:</BeatAttributeTitle>
@@ -137,20 +177,22 @@ export const Store = ({
                         </BeatAttribute>
                       );
                     })}
-                    <div style={{ width: "90%", marginTop: "25px" }}>
-                      <MuiButton
-                        variant="outlined"
-                        style={{
-                          color: colors.main.black,
-                          borderColor: colors.main.black,
-                          borderRadius: "20px",
-                          textTransform: "none",
-                        }}
-                        onClick={() => wrapBear(bear.id)}
-                      >
-                        Wrap Bear
-                      </MuiButton>
-                    </div>
+                    {type !== "wrap" ? (
+                      <div style={{ width: "90%", marginTop: "25px" }}>
+                        <MuiButton
+                          variant="outlined"
+                          style={{
+                            color: colors.main.black,
+                            borderColor: colors.main.black,
+                            borderRadius: "20px",
+                            textTransform: "none",
+                          }}
+                          onClick={() => wrapBear(bear.id)}
+                        >
+                          Wrap Bear
+                        </MuiButton>
+                      </div>
+                    ) : null}
                   </Item>
                 </Grid>
               );
