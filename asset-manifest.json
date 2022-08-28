@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/BanishedBears/static/css/main.d4481cae.css",
-    "main.js": "/BanishedBears/static/js/main.8f73489c.js",
+    "main.js": "/BanishedBears/static/js/main.6fc6cc76.js",
     "static/js/787.c81c69a7.chunk.js": "/BanishedBears/static/js/787.c81c69a7.chunk.js",
     "static/media/WorkSans-Bold.ttf": "/BanishedBears/static/media/WorkSans-Bold.a03aa1f5736811836842.ttf",
     "static/media/WorkSans-Black.ttf": "/BanishedBears/static/media/WorkSans-Black.e699ef7f229a94e77fe5.ttf",
@@ -12,11 +12,11 @@
     "static/media/plus.svg": "/BanishedBears/static/media/plus.18711ecad6e5042f999e10e19888c4cf.svg",
     "static/media/minus.svg": "/BanishedBears/static/media/minus.0af01f3754efb78f302597b993abe953.svg",
     "main.d4481cae.css.map": "/BanishedBears/static/css/main.d4481cae.css.map",
-    "main.8f73489c.js.map": "/BanishedBears/static/js/main.8f73489c.js.map",
+    "main.6fc6cc76.js.map": "/BanishedBears/static/js/main.6fc6cc76.js.map",
     "787.c81c69a7.chunk.js.map": "/BanishedBears/static/js/787.c81c69a7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d4481cae.css",
-    "static/js/main.8f73489c.js"
+    "static/js/main.6fc6cc76.js"
   ]
 }
