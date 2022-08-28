@@ -145,12 +145,13 @@ export const Store = ({
             ) : null}
           </ButtonGroup>
           <Grid container spacing={5}>
-            {bears.map((bear: Bear) => {
+            {bears.map((bear: Bear, index) => {
               return (
                 <Grid item xs={3}>
                   <Item>
                     <img
                       src={bear.image}
+                      key={`${bear.name}_${index}`}
                       style={{
                         width: "90%",
                         height: "90%",
