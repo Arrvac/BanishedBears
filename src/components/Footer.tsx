@@ -7,7 +7,7 @@ export const Footer = () => {
   return (
     <Background>
       <Container>
-        <Logo src={"/images/logo.png"} />
+        <Logo src={"images/logo.png"} />
         <Title>BANISHED BEARS</Title>
         <SmallTitle>FROM THE ASHES WE RISE</SmallTitle>
         <Row>

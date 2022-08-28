@@ -16,7 +16,7 @@ export const Carousel = () => {
   const Bears = BearsName.map(bear => {
     return (
       <img
-        src={`/images/bears/bear_${bear}.jpeg`}
+        src={`images/bears/bear_${bear}.jpeg`}
         style={{ width: "250px", height: "250px" }}
       />
     );

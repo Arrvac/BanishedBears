@@ -72,7 +72,7 @@ export const Store = ({
 
   return (
     <Container>
-      <Logo src={"/images/logo.png"} />
+      <Logo src={"images/logo.png"} />
       {!accountAddress ? (
         <>
           <Title>Connect your wallet</Title>

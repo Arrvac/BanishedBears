@@ -33,7 +33,7 @@ export const Navbar = ({
           <ErrorText>{errorMessage}</ErrorText>
         </Error>
       ) : null}
-      <HeaderBackground src={"/images/background.png"} />
+      <HeaderBackground src={"images/background.png"} />
       <Container>
         <Title>BANISHED BEARS</Title>
         <Right>

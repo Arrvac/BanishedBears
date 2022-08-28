@@ -5,7 +5,7 @@ export const Header = () => {
   return (
     <>
       <Container>
-        <Logo src={"/images/logo.png"} />
+        <Logo src={"images/logo.png"} />
         <Row>
           <NumberContainer>6710</NumberContainer>
           <Title>Unique Banished Bears</Title>
@@ -13,7 +13,7 @@ export const Header = () => {
         <TitleUnderline>living on the AVAX C-Chain</TitleUnderline>
         <SmallTitle>GENESIS SOLD OUT</SmallTitle>
       </Container>
-      <Bears src={"/images/bears.png"} />
+      <Bears src={"images/bears.png"} />
     </>
   );
 };
