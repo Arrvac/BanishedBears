@@ -140,7 +140,7 @@ export const Store = ({
                   wrapBear();
                 }}
               >
-                WRAP BEARS
+                WRAP YOUR BEARS
               </MuiButton>
             ) : null}
           </ButtonGroup>
