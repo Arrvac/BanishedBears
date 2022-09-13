@@ -127,6 +127,9 @@ export const Home = () => {
         newContract={newContract}
         oldContract={oldContract}
         wrapperContract={wrapperContract}
+        refreshNewContract={() => {
+          if (newContract) fetchAllBears(newContract, setBearsWrap);
+        }}
       />
       <FAQ />
       <Footer />

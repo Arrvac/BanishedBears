@@ -24,6 +24,7 @@ type StoreProps = {
   newContract: ethers.Contract | null;
   oldContract: ethers.Contract | null;
   wrapperContract: ethers.Contract | null;
+  refreshNewContract: () => void;
 };
 
 export const Store = ({
@@ -34,6 +35,7 @@ export const Store = ({
   oldContract,
   newContract,
   wrapperContract,
+  refreshNewContract,
 }: StoreProps) => {
   const [type, setType] = useState<"wrap" | "unwrap">("unwrap");
   const bears = type === "wrap" ? bearsWrap : bearsUnWrap;
@@ -109,9 +111,14 @@ export const Store = ({
                 borderRadius: 5,
                 borderColor: "white",
               }}
-              onClick={() => setType("wrap")}
+              onClick={() => {
+                setType("wrap");
+                if (bearsWrap.length <= 0) {
+                  refreshNewContract();
+                }
+              }}
             >
-              Wrap Bears
+              Bears
             </MuiButton>
             <MuiButton
               style={{
